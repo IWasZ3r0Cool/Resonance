@@ -1,0 +1,24 @@
+.env
+.env.*
+!.env.sample
+
+# Go
+/bin/
+/coverage.out
+
+# Local data
+/data/
+*.db
+*.db-shm
+*.db-wal
+
+# Frontend
+/web/node_modules/
+/web/dist/
+/web/.vite/
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+*.swp

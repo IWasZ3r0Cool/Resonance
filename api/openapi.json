@@ -1,0 +1,157 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Resonance Resume Engine API",
+    "version": "0.1.0",
+    "description": "Local-first API for the Resonance candidate source of truth, resume generation, and application tracking."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Default local API"
+    }
+  ],
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Check API and database health",
+        "tags": ["system"],
+        "responses": {
+          "200": {
+            "description": "The API and database are available.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/meta/capabilities": {
+      "get": {
+        "operationId": "getCapabilities",
+        "summary": "Describe this local Resonance runtime",
+        "tags": ["system"],
+        "responses": {
+          "200": {
+            "description": "Non-secret runtime capabilities.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapabilitiesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/openapi.json": {
+      "get": {
+        "operationId": "getOpenAPI",
+        "summary": "Download the API contract",
+        "tags": ["system"],
+        "responses": {
+          "200": {
+            "description": "The canonical OpenAPI document.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "ServiceUnavailable": {
+        "description": "A required local service is unavailable.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "HealthResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["status", "database", "version"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["ok"]
+          },
+          "database": {
+            "type": "string",
+            "enum": ["ok"]
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "CapabilitiesResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "agentSdk",
+          "database",
+          "llmConfigured",
+          "llmModel",
+          "llmProvider",
+          "localModelSupport"
+        ],
+        "properties": {
+          "agentSdk": {
+            "type": "string",
+            "const": "google-adk-go"
+          },
+          "database": {
+            "type": "string",
+            "const": "sqlite"
+          },
+          "llmConfigured": {
+            "type": "boolean"
+          },
+          "llmModel": {
+            "type": "string"
+          },
+          "llmProvider": {
+            "type": "string",
+            "enum": ["openai", "gemini", "ollama", "openai-compatible"]
+          },
+          "localModelSupport": {
+            "type": "boolean",
+            "const": true
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  background: #f6f4ef;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: #f6f4ef;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 8% 2%, rgba(140, 120, 232, 0.16), transparent 32rem),
+    radial-gradient(circle at 94% 24%, rgba(8, 126, 116, 0.11), transparent 28rem),
+    #f6f4ef;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
