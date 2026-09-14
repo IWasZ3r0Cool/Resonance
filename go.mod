@@ -7,7 +7,7 @@ require (
 	github.com/go-chi/cors v1.2.2
 	github.com/joho/godotenv v1.5.1
 	google.golang.org/adk/v2 v2.4.0
-	google.golang.org/genai v1.70.0
+	google.golang.org/genai v1.71.0
 	modernc.org/sqlite v1.58.0
 )
 
