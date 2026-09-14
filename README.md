@@ -25,7 +25,7 @@ The health and capabilities endpoints are runnable. Candidate editing, generatio
 
 1. **The candidate record is the source of truth.** Generated content must be traceable to stored facts.
 2. **Gaps are information, not invitations to fabricate.** Ask the candidate for missing evidence or produce the best honest draft.
-3. **Every application is reproducible.** Store an immutable snapshot of the job description, selected evidence, generation settings, and rendered resume.
+3. **Every application is reproducible.** Draft resume versions are editable, but final versions are immutable snapshots of the job description, selected evidence, generation settings, and rendered resume.
 4. **Local-first means useful without a cloud platform.** SQLite is the default and recent Ollama, LM Studio, and vLLM deployments can be used through an OpenAI Responses-compatible endpoint.
 5. **Providers are replaceable.** Domain and workflow code must not depend directly on a model vendor.
 
@@ -208,16 +208,18 @@ TypeScript is intentionally pinned to the latest compatible 5.x release: the cur
 
 - `candidate_profiles`: the owner of a local workspace.
 - `experiences`: detailed positions and projects, including source notes.
-- `resume_bullets`: reusable accomplishment evidence with optional situation/action/result detail; a rendered résumé may condense it without mutating it.
-- `skills` + `bullet_skills`: normalized skills such as Go or React, linked to the exact bullets that demonstrate them with provenance.
-- `tags` + `bullet_tags`: typed hats and differentiators—such as leadership, technical excellence, domain, or outcome—with provenance and rationale.
+- `resume_bullets`: candidate-owned, reusable accomplishment evidence with optional situation/action/result detail; a rendered résumé may condense it without mutating it.
+- `skills` + `bullet_skills`: normalized skills such as Go or React, linked to the exact same-candidate bullets that demonstrate them with provenance.
+- `tags` + `bullet_tags`: typed hats and differentiators—such as leadership, technical excellence, domain, or outcome—linked within the same candidate profile with provenance and rationale.
 - `job_targets`: immutable job-description snapshots and source metadata.
-- `resume_versions`: generated artifacts plus the factual source snapshot and generation metadata.
-- `applications`: the company/role/status record linked to the exact resume version used.
+- `resume_versions`: editable drafts and immutable final artifacts containing the factual source snapshot and generation metadata. A revision of a final artifact is a new draft whose `parent_version_id` points to that finalized same-candidate version.
+- `applications`: the company/role/status record linked only to the exact finalized resume version used.
 
-Skills and tags are many-to-many: one bullet can demonstrate several attributes, and one attribute can be supported by several bullets. Association `source` values distinguish candidate-provided/imported metadata from model suggestions that the candidate has explicitly confirmed. Unconfirmed inference must remain outside the source-of-truth tables.
+Skills and tags are many-to-many: one bullet can demonstrate several attributes, and one attribute can be supported by several bullets. Composite foreign keys prevent associations from crossing candidate profiles. Association `source` values distinguish candidate-provided/imported metadata from model suggestions that the candidate has explicitly confirmed. Unconfirmed inference must remain outside the source-of-truth tables; a model may identify a gap, but it may not invent or silently strengthen evidence to close one.
 
 SQLite foreign keys, WAL mode, and a busy timeout are enabled by the default DSN. Migrations run at API startup and are designed to move forward only.
+
+The foundation migration is not yet released and may still change before the first stable schema. If a development database was created from an earlier copy of `001_initial.sql`, delete and recreate that local database; there is no in-place upgrade path for prerelease foundation data.
 
 ## Repository guide for coding agents
 

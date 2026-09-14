@@ -179,7 +179,11 @@ function RuntimeBadge({ runtime }: { runtime: RuntimeState }) {
 
 function StatusCard({ runtime }: { runtime: RuntimeState }) {
   return (
-    <Card className="bg-[#1f1d2b] text-white">
+    <Card
+      component="section"
+      aria-label="Runtime status"
+      sx={{ bgcolor: "#1f1d2b", color: "common.white" }}
+    >
       <CardContent className="p-6 sm:p-7">
         <Typography variant="overline" sx={{ color: "rgba(255,255,255,.56)" }}>
           Runtime

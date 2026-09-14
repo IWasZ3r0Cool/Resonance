@@ -43,6 +43,10 @@ describe("App", () => {
     expect(await screen.findByText("Local API ready")).toBeInTheDocument();
     expect(screen.getByText("ollama · qwen3:8b")).toBeInTheDocument();
     expect(screen.getByText("configured")).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Runtime status" })).toHaveStyle({
+      backgroundColor: "#1f1d2b",
+      color: "#fff",
+    });
   });
 
   it("explains how to start an unavailable API", async () => {
