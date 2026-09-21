@@ -7,8 +7,8 @@ require (
 	github.com/go-chi/cors v1.2.2
 	github.com/joho/godotenv v1.5.1
 	google.golang.org/adk/v2 v2.4.0
-	google.golang.org/genai v1.70.0
-	modernc.org/sqlite v1.58.0
+	google.golang.org/genai v1.71.0
+	modernc.org/sqlite v1.59.0
 )
 
 require (
@@ -50,7 +50,7 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260819154853-08b0e4226688 // indirect
 	google.golang.org/grpc v1.83.2 // indirect
 	google.golang.org/protobuf v1.36.12 // indirect
-	modernc.org/libc v1.75.6 // indirect
+	modernc.org/libc v1.75.7 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.12.1 // indirect
 	rsc.io/omap v1.2.0 // indirect
